@@ -46,6 +46,7 @@ export function generateAuthUrl(codeChallenge: string, state: string): string {
 export async function exchangeCodeForTokens(code: string, codeVerifier: string): Promise<TokenResponse> {
   const body = new URLSearchParams({
     client_id: OAUTH_CONFIG.CLIENT_ID,
+    client_secret: OAUTH_CONFIG.CLIENT_SECRET,
     grant_type: "authorization_code",
     code,
     code_verifier: codeVerifier,
@@ -71,6 +72,7 @@ export async function exchangeCodeForTokens(code: string, codeVerifier: string):
 export async function refreshToken(refreshTokenStr: string): Promise<TokenResponse> {
   const body = new URLSearchParams({
     client_id: OAUTH_CONFIG.CLIENT_ID,
+    client_secret: OAUTH_CONFIG.CLIENT_SECRET,
     grant_type: "refresh_token",
     refresh_token: refreshTokenStr
   });

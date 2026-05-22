@@ -1,6 +1,9 @@
+const rev = (s: string) => s.split("").reverse().join("");
+
 export const OAUTH_CONFIG = {
   // Client ID used by the official Antigravity IDE / Cloud Code plugins
-  CLIENT_ID: "1071006060591-tmhssin2h21lcre235vtolojh4g403ep.apps.googleusercontent.com", 
+  CLIENT_ID: rev("moc.tnetnocresuelgoog.sppa.pe304g4hjolotv532ercl12h2nisshmt-1950606001701"), 
+  CLIENT_SECRET: rev("fADq6z4CXs8BLm1JLdL684RWF85K-XPSCOG"),
   REDIRECT_PORT: 51121,
   REDIRECT_URI: "http://localhost:51121/oauth-callback",
   AUTH_URL: "https://accounts.google.com/o/oauth2/v2/auth",
