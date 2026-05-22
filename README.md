@@ -42,7 +42,29 @@ The official terminal client for Google's Antigravity AI platform is required to
 
 ## 📥 Project Installation & Build
 
-Run the following instructions in OpenCode or your terminal to compile the provider plugin locally:
+### ⚡ Quick Setup & Run (One-liner)
+
+To install dependencies, bundle/install the plugin into OpenCode, and link the global login CLI in a single step:
+
+*   **Using Bun (Recommended):**
+    ```bash
+    git clone https://github.com/minhgv/agy-auth-oc.git && cd agy-auth-oc && bun install && bun run install-plugin && bun link
+    ```
+*   **Using npm:**
+    ```bash
+    git clone https://github.com/minhgv/agy-auth-oc.git && cd agy-auth-oc && npm install && npm run install-plugin && npm install -g .
+    ```
+
+Once completed, you can run the login flow immediately from any terminal directory:
+```bash
+oc-agy-login
+```
+
+---
+
+### Step-by-Step Installation
+
+If you prefer to run steps individually:
 
 1.  **Clone the repository and enter the directory:**
     ```bash
@@ -167,7 +189,7 @@ The plugin hosts a local callback listener on port `51121` to handle the PKCE OA
     *   *Required Scopes:* `openid`, `email`, `profile`, `cloud-platform`, `experimentsandconfigs`, and `cclog`.
 
 3.  **Token Storage:**
-    After signing in, the local server at `http://localhost:51121/callback` exchanges the code for tokens and saves them:
+    After signing in, the local server at `http://localhost:51121/oauth-callback` exchanges the code for tokens and saves them:
     *   **Primary Store (macOS):** System Keychain (under Service: `antigravity-cli`, Account: `antigravity-auth-token`).
     *   **Backup / Non-macOS Fallback:** Saves to `~/.config/opencode/antigravity-accounts.json` with strict `0o600` read/write permissions.
 
@@ -201,9 +223,9 @@ sequenceDiagram
     Note over User,GB: Browser navigates to Google Login page<br/>with Antigravity Client ID & Challenge
     User->>GB: Authenticate & Grant permissions
     GB->>GS: Submit credentials & consent
-    GS-->>GB: Redirect with Auth Code to http://localhost:51121/callback
+    GS-->>GB: Redirect with Auth Code to http://localhost:51121/oauth-callback
     
-    GB->>AS: GET /callback?code=AUTH_CODE
+    GB->>AS: GET /oauth-callback?code=AUTH_CODE
     AS-->>GB: Render "Authentication Successful" page
     AS->>AP: Deliver Auth Code to login logic
     AP->>AS: Stop/Shutdown Callback Server
