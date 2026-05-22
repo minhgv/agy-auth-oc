@@ -70,6 +70,27 @@ Run the following instructions in OpenCode or your terminal to compile the provi
 
 ---
 
+## 📂 Default Directories & Installation Paths
+
+You can clone the `agy-auth-oc` repository to any workspace directory on your machine. The OpenCode config files and backup account files are resolved relative to the system's home directory.
+
+Here is the path reference for macOS and Windows:
+
+| Component | macOS / Linux Location | Windows Location |
+| :--- | :--- | :--- |
+| **Plugin Source (`agy-auth-oc`)** | *Any folder* (e.g. `~/plugins/agy-auth-oc`) | *Any folder* (e.g. `C:\plugins\agy-auth-oc`) |
+| **OpenCode Config Directory** | `~/.config/opencode/` | `%USERPROFILE%\.config\opencode\` (equivalent to `C:\Users\<Name>\.config\opencode\`) |
+| **OpenCode Config File** | `~/.config/opencode/opencode.json` | `%USERPROFILE%\.config\opencode\opencode.json` |
+| **Fallback Accounts Storage** | `~/.config/opencode/antigravity-accounts.json` | `%USERPROFILE%\.config\opencode\antigravity-accounts.json` |
+| **Keyring Storage** | macOS System Keychain (Service: `antigravity-cli`) | *Not Applicable* (uses fallback JSON storage with `0o600` permissions) |
+
+### Path Resolution inside `opencode.json`
+When registering the plugin in `opencode.json`, always provide the absolute path where you cloned the `agy-auth-oc` repository:
+*   **macOS Example:** `/Users/<username>/plugins/agy-auth-oc`
+*   **Windows Example:** `C:/Users/<username>/plugins/agy-auth-oc` *(Use forward slashes `/` in JSON configurations to avoid escape character errors)*
+
+---
+
 ## 🔌 OpenCode Integration Setup
 
 Register this compiled local package into OpenCode by modifying the primary OpenCode configurations.
