@@ -6,7 +6,7 @@ export function startCallbackServer(expectedState: string): Promise<string> {
     const server = http.createServer((req, res) => {
       try {
         const reqUrl = new URL(req.url || "", `http://localhost:${OAUTH_CONFIG.REDIRECT_PORT}`);
-        if (reqUrl.pathname === "/callback") {
+        if (reqUrl.pathname === "/oauth-callback") {
           const code = reqUrl.searchParams.get("code");
           const state = reqUrl.searchParams.get("state");
 

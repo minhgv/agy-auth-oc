@@ -1,8 +1,8 @@
 export const OAUTH_CONFIG = {
   // Client ID used by the official Antigravity IDE / Cloud Code plugins
-  CLIENT_ID: "32555940559.apps.googleusercontent.com", 
+  CLIENT_ID: "1071006060591-tmhssin2h21lcre235vtolojh4g403ep.apps.googleusercontent.com", 
   REDIRECT_PORT: 51121,
-  REDIRECT_URI: "http://localhost:51121/callback",
+  REDIRECT_URI: "http://localhost:51121/oauth-callback",
   AUTH_URL: "https://accounts.google.com/o/oauth2/v2/auth",
   TOKEN_URL: "https://oauth2.googleapis.com/token",
   SCOPES: [
