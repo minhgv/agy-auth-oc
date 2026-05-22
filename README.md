@@ -131,10 +131,16 @@ Map the models you want to route through this provider in `~/.config/opencode/op
 
 The plugin hosts a local callback listener on port `51121` to handle the PKCE OAuth exchange securely.
 
-1.  **Initiate Login:**
-    Run the login command from the project root directory:
+1.  **Install the Login CLI globally (Run once):**
+    From the root directory of this repository, install the CLI globally on your system:
     ```bash
-    npm run login
+    npm install -g .
+    ```
+
+2.  **Initiate Login (Can be run from anywhere):**
+    Run the global login command from any directory in your terminal:
+    ```bash
+    agy-login
     ```
 
 2.  **Browser Consent:**

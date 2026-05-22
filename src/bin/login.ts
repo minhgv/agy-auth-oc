@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { execSync } from "child_process";
 import os from "os";
 import { AuthManager } from "../plugin/auth.js";

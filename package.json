@@ -4,6 +4,9 @@
   "description": "Google Antigravity 2.0 OAuth Provider for OpenCode",
   "main": "dist/index.js",
   "type": "module",
+  "bin": {
+    "agy-login": "./dist/bin/login.js"
+  },
   "scripts": {
     "build": "tsc",
     "login": "npm run build && node dist/bin/login.js",
