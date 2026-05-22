@@ -152,6 +152,51 @@ The plugin hosts a local callback listener on port `51121` to handle the PKCE OA
 
 ---
 
+## 🔑 Antigravity Authentication Flow
+
+The sequence diagram below details the Google OAuth 2.0 PKCE login process, starting a temporary local callback server, and securely storing credentials in the macOS Keychain or fallback JSON storage:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant OC as OpenCode Editor
+    participant AS as Auth Server (server.ts)
+    participant AP as Auth Provider (oauth.ts / auth.ts)
+    participant GB as Google Browser OAuth
+    participant GS as Google OAuth Server
+    participant KC as Keychain / Fallback Storage
+
+    User->>OC: Trigger login command
+    OC->>AP: Initialize login flow
+    AP->>AP: Generate PKCE Code Verifier & Challenge
+    AP->>AS: Start Local Callback Server (port 51121)
+    AS-->>AP: Server listening on localhost:51121
+    
+    AP->>User: Open Default Browser with Auth URL
+    Note over User,GB: Browser navigates to Google Login page<br/>with Antigravity Client ID & Challenge
+    User->>GB: Authenticate & Grant permissions
+    GB->>GS: Submit credentials & consent
+    GS-->>GB: Redirect with Auth Code to http://localhost:51121/callback
+    
+    GB->>AS: GET /callback?code=AUTH_CODE
+    AS-->>GB: Render "Authentication Successful" page
+    AS->>AP: Deliver Auth Code to login logic
+    AP->>AS: Stop/Shutdown Callback Server
+    
+    AP->>GS: POST /token (Auth Code, PKCE Code Verifier, Client ID)
+    GS-->>AP: Return Access Token, Refresh Token, and Expiry
+    
+    AP->>KC: Save Credentials (JSON formatted)
+    Note over KC: macOS: Keychain (antigravity-cli)<br/>Fallback: ~/.config/opencode/antigravity-accounts.json
+    KC-->>AP: Save Success
+    
+    AP-->>OC: Login Completed successfully
+    OC-->>User: Show Success Notification in Editor
+```
+
+---
+
 ## 🔄 Operational & Interception Flow
 
 The sequence diagram below represents how the plugin intercepts incoming calls from the OpenCode assistant, resolves credentials from the Keychain, and securely routes the translated payloads to the Google Antigravity Gateway:
