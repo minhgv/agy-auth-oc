@@ -13,3 +13,5 @@ export {
   TokenResponse
 } from "./antigravity/oauth.js";
 export { startCallbackServer } from "./antigravity/server.js";
+export { AntigravityAuthPlugin, default } from "./plugin.js";
+

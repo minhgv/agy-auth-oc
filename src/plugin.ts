@@ -248,3 +248,10 @@ export function registerFetchInterceptor(): void {
 
 // Automatically register the fetch interceptor on import
 registerFetchInterceptor();
+
+export const AntigravityAuthPlugin = async () => {
+  registerFetchInterceptor();
+  return {};
+};
+
+export default AntigravityAuthPlugin;

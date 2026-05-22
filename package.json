@@ -9,6 +9,8 @@
   },
   "scripts": {
     "build": "tsc",
+    "bundle": "bun build src/index.ts --target=node --minify --outfile=dist/agy-auth-oc.js",
+    "install-plugin": "npm run build && npm run bundle && mkdir -p ~/.config/opencode/plugins && cp dist/agy-auth-oc.js ~/.config/opencode/plugins/agy-auth-oc.js",
     "login": "npm run build && node dist/bin/login.js",
     "test": "vitest run",
     "test:watch": "vitest"

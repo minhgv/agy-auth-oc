@@ -84,27 +84,21 @@ Here is the path reference for macOS and Windows:
 | **Fallback Accounts Storage** | `~/.config/opencode/antigravity-accounts.json` | `%USERPROFILE%\.config\opencode\antigravity-accounts.json` |
 | **Keyring Storage** | macOS System Keychain (Service: `antigravity-cli`) | *Not Applicable* (uses fallback JSON storage with `0o600` permissions) |
 
-### Path Resolution inside `opencode.json`
-When registering the plugin in `opencode.json`, always provide the absolute path where you cloned the `agy-auth-oc` repository:
-*   **macOS Example:** `/Users/<username>/plugins/agy-auth-oc`
-*   **Windows Example:** `C:/Users/<username>/plugins/agy-auth-oc` *(Use forward slashes `/` in JSON configurations to avoid escape character errors)*
+### Path Resolution
+The plugin is compiled, bundled, and placed directly in OpenCode's global plugins directory. You do not need to configure any absolute file path inside `opencode.json`.
 
 ---
 
 ## 🔌 OpenCode Integration Setup
 
-Register this compiled local package into OpenCode by modifying the primary OpenCode configurations.
+OpenCode automatically scans and loads any `.js` or `.ts` plugins placed inside the global plugins directory (`~/.config/opencode/plugins/`).
 
-### 1. Update OpenCode Plugin Config
-Open `~/.config/opencode/opencode.json` (or your active profile configuration) and add the absolute file path of this plugin to your `plugins` block:
-
-```json
-{
-  "plugins": [
-    "/absolute/path/to/cloned/agy-auth-oc"
-  ]
-}
+### 1. Install Plugin Globally
+To build and install the plugin automatically, run this script from the root directory of this repository:
+```bash
+npm run install-plugin
 ```
+This script compiles the TypeScript files, bundles the entire codebase (including all module exports) into a single optimized JavaScript bundle (`dist/agy-auth-oc.js`), and copies it to `~/.config/opencode/plugins/agy-auth-oc.js`. OpenCode will automatically detect and load it on next startup.
 
 ### 2. Configure Model Routing
 Map the models you want to route through this provider in `~/.config/opencode/opencode.json`:
