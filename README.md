@@ -52,21 +52,36 @@ Run the following instructions in OpenCode or your terminal to compile the provi
 
 2.  **Install development dependencies:**
     This project uses pure TypeScript with zero runtime third-party production dependencies.
-    ```bash
-    npm install
-    ```
+    *   **Using Bun (Recommended):**
+        ```bash
+        bun install
+        ```
+    *   **Using npm:**
+        ```bash
+        npm install
+        ```
 
 3.  **Compile TypeScript to ESM:**
     Generates Javascript code in the `/dist` directory.
-    ```bash
-    npm run build
-    ```
+    *   **Using Bun (Recommended):**
+        ```bash
+        bun run build
+        ```
+    *   **Using npm:**
+        ```bash
+        npm run build
+        ```
 
 4.  **Run Tests (Optional):**
     Verify the build and request interceptor logic with the Vitest test suite:
-    ```bash
-    npm run test
-    ```
+    *   **Using Bun (Recommended):**
+        ```bash
+        bun test
+        ```
+    *   **Using npm:**
+        ```bash
+        npm run test
+        ```
 
 ---
 
@@ -95,9 +110,14 @@ OpenCode automatically scans and loads any `.js` or `.ts` plugins placed inside 
 
 ### 1. Install Plugin Globally
 To build and install the plugin automatically, run this script from the root directory of this repository:
-```bash
-npm run install-plugin
-```
+*   **Using Bun (Recommended):**
+    ```bash
+    bun run install-plugin
+    ```
+*   **Using npm:**
+    ```bash
+    npm run install-plugin
+    ```
 This script compiles the TypeScript files, bundles the entire codebase (including all module exports) into a single optimized JavaScript bundle (`dist/agy-auth-oc.js`), and copies it to `~/.config/opencode/plugins/agy-auth-oc.js`. OpenCode will automatically detect and load it on next startup.
 
 ### 2. Configure Model Routing
@@ -126,10 +146,15 @@ Map the models you want to route through this provider in `~/.config/opencode/op
 The plugin hosts a local callback listener on port `51121` to handle the PKCE OAuth exchange securely.
 
 1.  **Install the Login CLI globally (Run once):**
-    From the root directory of this repository, install the CLI globally on your system:
-    ```bash
-    npm install -g .
-    ```
+    From the root directory of this repository, link the CLI command:
+    *   **Using Bun (Recommended):**
+        ```bash
+        bun link
+        ```
+    *   **Using npm:**
+        ```bash
+        npm install -g .
+        ```
 
 2.  **Initiate Login (Can be run from anywhere):**
     Run the global login command from any directory in your terminal:
