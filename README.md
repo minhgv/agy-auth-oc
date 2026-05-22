@@ -152,6 +152,65 @@ The plugin hosts a local callback listener on port `51121` to handle the PKCE OA
 
 ---
 
+## 🔄 Operational & Interception Flow
+
+The sequence diagram below represents how the plugin intercepts incoming calls from the OpenCode assistant, resolves credentials from the Keychain, and securely routes the translated payloads to the Google Antigravity Gateway:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant OC as OpenCode Editor
+    participant FI as Fetch Interceptor (plugin.ts)
+    participant AM as Account Manager (accounts.ts)
+    participant KC as Keychain / Fallback Storage
+    participant AG as Antigravity Gateway
+
+    User->>OC: Submit Prompt / Trigger Chat
+    Note over OC: Initiates fetch() call targeting<br/>generativelanguage.googleapis.com
+    OC->>FI: Intercept fetch(url, options)
+    
+    rect rgb(30, 41, 59)
+        Note over FI: 1. Sanitize JSON Schema (strip $ref, map const to enum)<br/>2. Normalize tool/function names<br/>3. Filter thinking blocks if needed
+    end
+    
+    FI->>AM: getValidAccessToken()
+    AM->>KC: Load saved credentials
+    KC-->>AM: Return token (expiry, accessToken, refreshToken)
+    
+    alt Token is Expired
+        AM->>AM: Refresh token via Google OAuth API
+        AM->>KC: Save refreshed credentials
+    end
+    AM-->>FI: Return Valid Access Token
+
+    FI->>FI: Translate payload to Antigravity v1internal format
+    
+    loop API Request Loop
+        FI->>AG: POST /v1internal:streamGenerateChat (with Client Headers & Bearer Token)
+        alt Success (HTTP 200)
+            AG-->>FI: Stream SSE response chunks
+        else Overage/Quota Error (HTTP 429 / 403 overage)
+            Note over FI: Flag active account as rate-limited
+            FI->>AM: Request next rotated account token
+            AM-->>FI: Return secondary account token
+            FI->>AG: Retry request with new token
+        else Endpoint Failover
+            Note over FI: Primary Gateway down -> Failover to Sandbox/Prod Gateways
+            FI->>AG: Request alternative gateway endpoint
+        end
+    end
+    
+    loop Stream Processing
+        FI->>FI: 1. Parse incoming SSE chunks<br/>2. Format search grounding citations<br/>3. Repair conversation turn boundaries (if needed)
+        FI-->>OC: Stream transformed chunks in Google AI SDK format
+    end
+    
+    OC-->>User: Render model response / text output
+```
+
+---
+
 ## ⚙️ Supported Models Reference
 
 The internal Antigravity unified gateway supports the following routing targets:
