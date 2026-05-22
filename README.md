@@ -44,9 +44,10 @@ The official terminal client for Google's Antigravity AI platform is required to
 
 Run the following instructions in OpenCode or your terminal to compile the provider plugin locally:
 
-1.  **Clone / Copy the codebase to your local plugin directory:**
+1.  **Clone the repository and enter the directory:**
     ```bash
-    cd /Users/giapminh79/Documents/GitHub/antigravity-auth-opencode
+    git clone https://github.com/minhgv/agy-auth-oc.git
+    cd agy-auth-oc
     ```
 
 2.  **Install development dependencies:**
@@ -79,7 +80,7 @@ Open `~/.config/opencode/opencode.json` (or your active profile configuration) a
 ```json
 {
   "plugins": [
-    "/Users/giapminh79/Documents/GitHub/antigravity-auth-opencode"
+    "/absolute/path/to/cloned/agy-auth-oc"
   ]
 }
 ```
