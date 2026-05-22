@@ -33,7 +33,9 @@ describe("Request Payload Transformer", () => {
     expect(req.generationConfig.maxOutputTokens).toBe(2048);
     // Gemini 3.5 Flash supports thinking, level should be minimal
     expect(req.generationConfig.thinkingConfig).toBeDefined();
-    expect(req.generationConfig.thinkingLevel).toBe("minimal");
+    expect(req.generationConfig.thinkingConfig.thinkingLevel).toBe("MINIMAL");
+    expect(req.generationConfig.thinkingConfig.thinkingBudget).toBeUndefined();
+    expect(req.generationConfig.thinkingLevel).toBeUndefined();
   });
 });
 

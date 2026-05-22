@@ -90,14 +90,17 @@ export function transformRequestPayload(options: RequestOptions): any {
   };
 
   if (modelConfig.thinking.supported) {
-    generationConfig.thinkingConfig = {
-      thinkingBudget: modelConfig.thinking.maxBudget ?? 8000,
+    const thinkingConfig: Record<string, any> = {
       includeThoughts: true
     };
-    // Include thinking level for Gemini 3.5 models
-    if (options.modelId.startsWith("gemini-3.5")) {
-      generationConfig.thinkingLevel = modelConfig.thinking.defaultLevel || "minimal";
+
+    if (modelConfig.thinking.defaultLevel) {
+      thinkingConfig.thinkingLevel = modelConfig.thinking.defaultLevel.toUpperCase();
+    } else {
+      thinkingConfig.thinkingBudget = modelConfig.thinking.maxBudget ?? 8000;
     }
+
+    generationConfig.thinkingConfig = thinkingConfig;
   }
 
   // Wrap inside Antigravity structure
