@@ -132,11 +132,10 @@ Map the models you want to route through this provider in `~/.config/opencode/op
 The plugin hosts a local callback listener on port `51121` to handle the PKCE OAuth exchange securely.
 
 1.  **Initiate Login:**
-    Run the authorization process via OpenCode:
+    Run the login command from the project root directory:
     ```bash
-    opencode auth login --provider google-antigravity
+    npm run login
     ```
-    *(Alternatively, run the build artifact CLI if integrated as an entrypoint).*
 
 2.  **Browser Consent:**
     Your default browser will open to Google's authentication page. Log in with your Google account.

@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "login": "npm run build && node dist/bin/login.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
